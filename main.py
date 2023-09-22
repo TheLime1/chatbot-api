@@ -8,13 +8,13 @@ from fastapi_poe import make_app
 from modal import Image, Stub, asgi_app
 
 from catbot import CatBot
-from chatgpt_allcapsbot import ChatGPTAllCapsBot
+from chatgpt_allcapsbot import ChatGPTBot
 from chatgpt_vs_claude import ChatGPTvsClaudeBot
 from echobot import EchoBot
 from huggingface_bot import HuggingFaceBot
 
 # Echo bot is a very simple bot that just echoes back the user's last message.
-bot = EchoBot()
+bot = ChatGPTBot()
 
 # A sample bot that showcases the capabilities the protocol provides. Please see the
 # following link for the full set of available message commands:
