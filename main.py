@@ -35,7 +35,7 @@ bot = ChatGPTBot()
 # The following is setup code that is required to host with modal.com
 image = Image.debian_slim().pip_install_from_requirements("requirements.txt")
 # Rename "poe-server-bot-quick-start" to your preferred app name.
-stub = Stub("poe-server-bot-quick-start")
+stub = Stub("chatbot-api-service")
 
 
 @stub.function(image=image)
