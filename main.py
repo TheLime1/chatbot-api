@@ -14,7 +14,7 @@ from echobot import EchoBot
 from huggingface_bot import HuggingFaceBot
 
 # Echo bot is a very simple bot that just echoes back the user's last message.
-bot = ChatGPTBot()
+#bot = EchoBot()
 
 # A sample bot that showcases the capabilities the protocol provides. Please see the
 # following link for the full set of available message commands:
@@ -24,10 +24,10 @@ bot = ChatGPTBot()
 # A bot that uses Poe's ChatGPT bot, but makes all messages ALL CAPS.
 # Good simple example of using another bot using Poe's third party bot API.
 # For more details, see: https://developer.poe.com/server-bots/accessing-other-bots-on-poe
-# bot = ChatGPTAllCapsBot()
+bot = ChatGPTBot()
 
 # A bot that calls bot ChatGPT and Claude-instant and displays the results.
-# bot = ChatGPTvsClaudeBot()
+#bot = ChatGPTvsClaudeBot()
 
 # A chatbot based on a model hosted on HuggingFace.
 # bot = HuggingFaceBot("microsoft/DialoGPT-medium")
@@ -47,7 +47,6 @@ def fastapi_app():
     # but the starter example disables the key check for convenience.
     # 3. You can also store your access key on modal.com and retrieve it in this function
     # by following the instructions at: https://modal.com/docs/guide/secrets
-    # POE_ACCESS_KEY = ""
-    # app = make_app(bot, access_key=POE_ACCESS_KEY)
-    app = make_app(bot, allow_without_key=True)
+    POE_ACCESS_KEY = "3vM00dw46dFkBr3kZrSwiMV5hwewjASe"
+    app = make_app(bot, access_key=POE_ACCESS_KEY)
     return app

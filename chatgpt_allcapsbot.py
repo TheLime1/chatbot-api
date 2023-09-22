@@ -1,13 +1,6 @@
-"""
-
-Sample bot that wraps ChatGPT.
-
-"""
-from __future__ import annotations
-
 from typing import AsyncIterable
 
-from fastapi_poe import PoeBot
+from fastapi_poe import PoeBot, run
 from fastapi_poe.client import stream_request
 from fastapi_poe.types import (
     PartialResponse,
@@ -23,4 +16,7 @@ class ChatGPTBot(PoeBot):
             yield msg
 
     async def get_settings(self, setting: SettingsRequest) -> SettingsResponse:
-        return SettingsResponse(server_bot_dependencies={"ChatGPT": 1})
+        return SettingsResponse(
+            allow_attachments=True,
+            server_bot_dependencies={"ChatGPT": 1}
+    )
