@@ -1,36 +1,16 @@
-# Welcome to the Poe server bot quick start. This repo includes starter code that allows you to
-# quickly get a bot running. By default, the code uses the EchoBot, which is a simple bot that
-# echos a message back at its user and is a good starting point for your bot, but you can
-# comment/uncomment any of the following code to try out other example bots or build on top
-# of the EchoBot.
-
 from fastapi_poe import make_app
 from modal import Image, Stub, asgi_app
 
-from catbot import CatBot
-from chatgpt_allcapsbot import ChatGPTBot
-from chatgpt_vs_claude import ChatGPTvsClaudeBot
+from chatgpt import ChatGPTBot
 from echobot import EchoBot
-from huggingface_bot import HuggingFaceBot
 
 # Echo bot is a very simple bot that just echoes back the user's last message.
 #bot = EchoBot()
 
-# A sample bot that showcases the capabilities the protocol provides. Please see the
-# following link for the full set of available message commands:
-# https://github.com/poe-platform/server-bot-quick-start/blob/main/catbot/catbot.md
-# bot = CatBot()
-
-# A bot that uses Poe's ChatGPT bot, but makes all messages ALL CAPS.
+# A bot that uses Poe's ChatGPT bot
 # Good simple example of using another bot using Poe's third party bot API.
 # For more details, see: https://developer.poe.com/server-bots/accessing-other-bots-on-poe
 bot = ChatGPTBot()
-
-# A bot that calls bot ChatGPT and Claude-instant and displays the results.
-#bot = ChatGPTvsClaudeBot()
-
-# A chatbot based on a model hosted on HuggingFace.
-# bot = HuggingFaceBot("microsoft/DialoGPT-medium")
 
 # The following is setup code that is required to host with modal.com
 image = Image.debian_slim().pip_install_from_requirements("requirements.txt")
