@@ -12,7 +12,7 @@ from fastapi_poe.types import (
 
 class ChatGPTBot(PoeBot):
     async def get_response(self, query: QueryRequest) -> AsyncIterable[PartialResponse]:
-        async for msg in stream_request(query, "ChatGPT", query.access_key, base_prompt="act as a comedian"):
+        async for msg in stream_request(query, "ChatGPT", query.access_key):
             yield msg
 
 
