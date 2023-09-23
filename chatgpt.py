@@ -1,3 +1,4 @@
+#only speak french
 from typing import AsyncIterable
 
 from fastapi_poe import PoeBot, run
@@ -10,10 +11,13 @@ from fastapi_poe.types import (
 )
 
 class ChatGPTBot(PoeBot):
-    base_prompt = "only speak arabic"  # Add your base prompt here
+    with open(__file__, 'r') as file:
+        first_line = file.readline()
+
+    # Extract the base prompt from the first line
+    base_prompt = first_line.strip('#').strip()
 
     async def get_response(self, query: QueryRequest) -> AsyncIterable[PartialResponse]:
-        # Prepend the base prompt to the user's query
         query.query[0].content = self.base_prompt + query.query[0].content
         async for msg in stream_request(query, "ChatGPT", query.access_key):
             yield msg
