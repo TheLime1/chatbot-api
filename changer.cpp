@@ -36,5 +36,15 @@ int main() {
 
     std::cout << "First line of " << pythonFileName << " has been changed to: " << newComment << std::endl;
 
+    // Execute the "modal deploy main.py" command
+    std::string deployCommand = "modal deploy main.py";
+    std::cout << "Executing command: " << deployCommand << std::endl;
+    int result = system(deployCommand.c_str());
+    if (result == 0) {
+        std::cout << "Command executed successfully." << std::endl;
+    } else {
+        std::cout << "Command execution failed." << std::endl;
+    }
+
     return 0;
 }
