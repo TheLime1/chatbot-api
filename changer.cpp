@@ -9,7 +9,11 @@ int main() {
     std::ifstream basePromptFile("base_prompt.txt");
 
     if (basePromptFile.is_open()) {
-        std::getline(basePromptFile, basePrompt);
+        // Read the entire content of the file and insert a space between lines
+        std::string line;
+        while (std::getline(basePromptFile, line)) {
+            basePrompt += line + " "; // Insert a space after each line
+        }
         basePromptFile.close();
     } else {
         std::cerr << "Unable to open base_prompt.txt" << std::endl;
