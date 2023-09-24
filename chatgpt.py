@@ -1,4 +1,4 @@
-#only speak french
+#only speak spanish
 from typing import AsyncIterable
 
 from fastapi_poe import PoeBot, run

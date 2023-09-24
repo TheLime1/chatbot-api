@@ -4,8 +4,20 @@
 #include <string>
 
 int main() {
-    // Define the new comment for the first line
-    std::string newComment = "#only speak french";
+    // Read the base prompt from "base_prompt.txt"
+    std::string basePrompt;
+    std::ifstream basePromptFile("base_prompt.txt");
+
+    if (basePromptFile.is_open()) {
+        std::getline(basePromptFile, basePrompt);
+        basePromptFile.close();
+    } else {
+        std::cerr << "Unable to open base_prompt.txt" << std::endl;
+        return 1; // Exit with an error code
+    }
+
+    // Add a '#' to the beginning of the base prompt
+    std::string newComment = "#" + basePrompt;
 
     // Specify the Python file to modify
     std::string pythonFileName = "chatgpt.py";
