@@ -1,0 +1,6 @@
+#HEADER#Name,Age,Location,Occupation#RECORD#John,25,New York,Engineer#RECORD#Alice,30,San Francisco,Designer#RECORD#Bob,22,Los Angeles,Student
+
+
+
+#HEADER# is used to indicate the start of the header.
+#RECORD# is used to indicate the start of each person's record.
