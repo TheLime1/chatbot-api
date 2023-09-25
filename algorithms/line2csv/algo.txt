@@ -1,0 +1,6 @@
+    //find the number of "," between "#HEADER#" and the first "#RECORD#"
+    //save the number as a variable called TotalNumSep
+    //remove every "#HEADER#" and every "#RECORD#" from the string
+    //print the string to the new csv file in loop
+    //make a counter variable called CurrentNumSep that go +1 every it hit a ","
+    //for every time CurrentNumSep == TotalNumSep, insert "\n" to the string
