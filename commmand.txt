@@ -1,1 +1,3 @@
 modal deploy main.py
+
+curl -X POST https://api.poe.com/bot/fetch_settings/<botname>/<access_key>

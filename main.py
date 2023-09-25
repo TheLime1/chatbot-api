@@ -3,6 +3,7 @@ from modal import Image, Stub, asgi_app
 
 from chatgpt import ChatGPTBot
 from echobot import EchoBot
+from no_base import nobase
 
 # Echo bot is a very simple bot that just echoes back the user's last message.
 #bot = EchoBot()
@@ -10,7 +11,9 @@ from echobot import EchoBot
 # A bot that uses Poe's ChatGPT bot
 # Good simple example of using another bot using Poe's third party bot API.
 # For more details, see: https://developer.poe.com/server-bots/accessing-other-bots-on-poe
-bot = ChatGPTBot()
+#bot = ChatGPTBot()
+
+bot=nobase()
 
 # The following is setup code that is required to host with modal.com
 image = Image.debian_slim().pip_install_from_requirements("requirements.txt")
@@ -27,6 +30,7 @@ def fastapi_app():
     # but the starter example disables the key check for convenience.
     # 3. You can also store your access key on modal.com and retrieve it in this function
     # by following the instructions at: https://modal.com/docs/guide/secrets
-    POE_ACCESS_KEY = "3vM00dw46dFkBr3kZrSwiMV5hwewjASe"
+    POE_ACCESS_KEY = "C6C6kZ45ZHxGBk2LWZ8WdhR9A63N802n"
     app = make_app(bot, access_key=POE_ACCESS_KEY)
+    #app = make_app(bot, allow_without_key=True)
     return app
