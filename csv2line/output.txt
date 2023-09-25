@@ -1,1 +1,0 @@
-#HEADER#Name,Age,Location,Occupation#RECORD#John,25,New York,Engineer#RECORD#Alice,30,San Francisco,Designer#RECORD#Bob,22,Los Angeles,Student#RECORD#Ella,28,Chicago,Doctor#RECORD#Michael,35,Boston,Teacher
