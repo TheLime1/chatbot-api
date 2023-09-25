@@ -1,4 +1,4 @@
-Name,Age,Location,OccupationJohn
-25,New York,Engineer#RECORD#Alice,30
-San Francisco,Designer#RECORD#Bob,22,Los Angeles
-Student,
+Name,Age,Location,Occupation
+John,25,New York,Engineer
+Alice,30,San Francisco,Designer
+Bob,22,Los Angeles,Student

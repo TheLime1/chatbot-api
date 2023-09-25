@@ -28,35 +28,40 @@ int main() {
     std::string text;
     std::getline(txtFile, text);
 
-    // Find the number of "," between "#HEADER#" and the first "#RECORD#"
+    //find the number of "," between "#HEADER#" and the first "#RECORD#"
     std::string header = "#HEADER#";
     std::string record = "#RECORD#";
-    size_t headerPos = text.find(header);
-    size_t recordPos = text.find(record);
-    if (headerPos == std::string::npos || recordPos == std::string::npos) {
-        std::cerr << "Failed to find header or record in text." << std::endl;
-        return 1;
-    }
-    std::string headerToRecord = text.substr(headerPos + header.length(), recordPos - headerPos - header.length());
-    int totalNumSep = std::count(headerToRecord.begin(), headerToRecord.end(), ',');
-    totalNumSep++; // Add one for the last column
+    std::string record2 = "RECORD";
+    int headerPos = text.find(header);
+    int recordPos = text.find(record);
+    int numSep = std::count(text.begin() + headerPos, text.begin() + recordPos, ',');
 
-    // Remove every "#HEADER#" and every "#RECORD#" from the string
+    //save the number as a variable called TotalNumSep
+    int totalNumSep = numSep;
+
+    //remove the word "#HEADER#"
     text.erase(headerPos, header.length());
-    text.erase(recordPos - record.length(), record.length());
 
-    // Print the string to the new csv file in loop
+    //replace every "#RECORD#" with "\n" 
+    std::replace(text.begin(), text.end(), '#', '\n');
+    //remove every "#RECORD#" or "RECORD" until there is no "#RECORD#" or "RECORD"
+    while (text.find(record) != std::string::npos) {
+        text.erase(text.find(record), record.length());
+    }
+    while (text.find(record2) != std::string::npos) {
+        text.erase(text.find(record2), record2.length());
+    }
+
+    //print the string to the new csv file in loop
     std::istringstream iss(text);
-    std::string token;
+    std::string line;
     int currentNumSep = 0;
-    while (std::getline(iss, token, ',')) {
-        csvFile << token;
-        currentNumSep++;
+    while (std::getline(iss, line)) {
+        csvFile << line;
+        currentNumSep += std::count(line.begin(), line.end(), ',');
         if (currentNumSep == totalNumSep) {
             csvFile << "\n";
             currentNumSep = 0;
-        } else {
-            csvFile << ",";
         }
     }
 
