@@ -4,6 +4,7 @@ from modal import Image, Stub, asgi_app
 from chatgpt import ChatGPTBot
 from echobot import EchoBot
 from no_base import nobase
+import config # forcing import so i can deploy it to modal.com
 
 # Echo bot is a very simple bot that just echoes back the user's last message.
 #bot = EchoBot()

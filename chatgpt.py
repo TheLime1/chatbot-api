@@ -11,10 +11,10 @@ from fastapi_poe.types import (
 )
 import gspread
 
-gc = gspread.service_account(filename="creds.json")
+gc = gspread.service_account(filename="config.py") #duck tapped solution >>> from json to python
 sh = gc.open("ecodeliver")
 ws = sh.get_worksheet(0)
-with open(__file__, 'r') as file:
+with open(__file__, 'r') as file: #duck tapped solution >>> cant upload txt to modal so i put it in the same file as comment xD
     first_line = file.readline()
 
 base_prompt = first_line.strip('#').strip()
