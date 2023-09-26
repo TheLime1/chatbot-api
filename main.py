@@ -11,9 +11,9 @@ from no_base import nobase
 # A bot that uses Poe's ChatGPT bot
 # Good simple example of using another bot using Poe's third party bot API.
 # For more details, see: https://developer.poe.com/server-bots/accessing-other-bots-on-poe
-#bot = ChatGPTBot()
+bot = ChatGPTBot()
 
-bot=nobase()
+#bot=nobase()
 
 # The following is setup code that is required to host with modal.com
 image = Image.debian_slim().pip_install_from_requirements("requirements.txt")

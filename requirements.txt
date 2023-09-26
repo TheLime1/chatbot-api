@@ -1,3 +1,4 @@
 fastapi-poe==0.0.19
 huggingface-hub==0.16.4
 pydantic>=2
+gspread

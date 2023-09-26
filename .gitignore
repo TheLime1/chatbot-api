@@ -1,3 +1,7 @@
+#custom
+/test
+creds.json
+
 ### C++ ###
 # Prerequisites
 *.d
