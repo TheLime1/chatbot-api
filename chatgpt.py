@@ -1,4 +1,4 @@
-#Act as a chatbot that assists the agents of EcoDeliver. Your role is to help EcoDeliver agents effectively utilize the application, provide guidance, answer project-related questions, and offer solutions to challenges specific to EcoDeliver. EcoDeliver is an innovative IoT-powered app for efficient parcel delivery management, integrating real-time tracking, user-friendly interfaces, and environmentally friendly practices. You have access to the following database: {#HEADER#reference,destination,date,etat (livre / non livre)#RECORD#1234,Paris,2023-10-05,Delivered#RECORD#5678,New York,2023-09-20,Not Delivered#RECORD#9876,London,2023-09-15,Delivered} Remember that every user who interacts with you is an agent seeking assistance with EcoDeliver-related tasks 
+#Act as a chatbot that assists the agents of EcoDeliver. Your role is to help EcoDeliver agents effectively utilize the application, provide guidance, answer project-related questions, and offer solutions to challenges specific to EcoDeliver. EcoDeliver is an innovative IoT-powered app for efficient parcel delivery management, integrating real-time tracking, user-friendly interfaces, and environmentally friendly practices. You have access to the following database: {#HEADER#reference,destination,date,state (Delivered / not Delivered)#RECORD#1234,blabla,2023-10-05,Delivered#RECORD#5678,New York,2023-09-20,Not Delivered#RECORD#9876,London,2023-09-15,Delivered} Remember that every user who interacts with you is an agent seeking assistance with EcoDeliver-related tasks 
 from typing import AsyncIterable
 
 from fastapi_poe import PoeBot, run
@@ -10,6 +10,7 @@ from fastapi_poe.types import (
     SettingsResponse,
 )
 import gspread
+import re
 
 gc = gspread.service_account(filename="config.py") #duck tapped solution >>> from json to python
 sh = gc.open("ecodeliver")
@@ -30,9 +31,26 @@ ws.update('A1', data)
 
 class ChatGPTBot(PoeBot):  
     async def get_response(self, query: QueryRequest) -> AsyncIterable[PartialResponse]:
-        query.query[0].content = self.base_prompt + query.query[0].content
-        async for msg in stream_request(query, "ChatGPT", query.access_key):
-            yield msg
+        global counter
+        content = query.query[0].content
+        command_check=query.query[-1].content
+
+        if "add_command" in command_check.lower() or "new_command" in command_check.lower():
+            # Extract command details from the message
+            match = re.match(r"(add|new)_command reference:(\d+) destination:(\w+) date:(\d{4}-\d{2}-\d{2}) state:(\w+)", content.lower())
+            if match:
+                reference, destination, date, state = match.groups()[1:]
+                # Add the command to the sheet
+                ws.append_row([reference, destination, date, state])
+                counter += 1
+                response = f"Command added successfully."
+            else:
+                response = f"Invalid command format. Please enter the command info in the format: add_command reference:xxxx destination:xxxx date:xxxx state:xxxx"
+            yield [PartialResponse(content=response)]
+        else:
+            query.query[0].content = base_prompt + content
+            async for msg in stream_request(query, "ChatGPT", query.access_key):
+                yield msg
 
     async def get_settings(self, setting: SettingsRequest) -> SettingsResponse:
         return SettingsResponse(

@@ -1,3 +1,5 @@
 modal deploy main.py
 
 curl -X POST https://api.poe.com/bot/fetch_settings/<botname>/<access_key>
+
+add_command reference:15423 destination:tunis date:2023-01-01 state:delivired
