@@ -37,7 +37,7 @@ class ChatGPTBot(PoeBot):
 
         if "add_command" in command_check.lower() or "new_command" in command_check.lower():
             # Extract command details from the message
-            match = re.match(r"(add|new)_command reference:(\d+) destination:(\w+) date:(\d{4}-\d{2}-\d{2}) state:(\w+)", content.lower())
+            match = re.match(r"(add|new)_command reference:(\d+) destination:(\w+) date:(\d{4}-\d{2}-\d{2}) state:(\w+)", command_check.lower())
             if match:
                 reference, destination, date, state = match.groups()[1:]
                 # Add the command to the sheet
@@ -46,12 +46,14 @@ class ChatGPTBot(PoeBot):
                 response = "Command added successfully."
             else:
                 response = "Invalid command format. Please enter the command info in the format: add_command reference:xxxx destination:xxxx date:xxxx state:xxxx"
-                # Add this line to assign response when the command format is invalid
+                # Add this line to log the reason for invalid command format
+                print(f"Invalid command format: {command_check}")
             yield PartialResponse(text=response)
         else:
             query.query[0].content = base_prompt + content
             async for msg in stream_request(query, "ChatGPT", query.access_key):
                 yield msg
+
 
     async def get_settings(self, setting: SettingsRequest) -> SettingsResponse:
         return SettingsResponse(
