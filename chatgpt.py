@@ -43,10 +43,11 @@ class ChatGPTBot(PoeBot):
                 # Add the command to the sheet
                 ws.append_row([reference, destination, date, state])
                 counter += 1
-                response = f"Command added successfully."
+                response = "Command added successfully."
             else:
-                response = f"Invalid command format. Please enter the command info in the format: add_command reference:xxxx destination:xxxx date:xxxx state:xxxx"
-            yield [PartialResponse(content=response)]
+                response = "Invalid command format. Please enter the command info in the format: add_command reference:xxxx destination:xxxx date:xxxx state:xxxx"
+                # Add this line to assign response when the command format is invalid
+            yield PartialResponse(text=response)
         else:
             query.query[0].content = base_prompt + content
             async for msg in stream_request(query, "ChatGPT", query.access_key):
