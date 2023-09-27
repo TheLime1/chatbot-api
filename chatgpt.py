@@ -28,10 +28,14 @@ records = [r.strip() for r in base_database.split('#RECORD#') if r.strip()]
 data = [r.split(',') for r in records]
 # Finally, update the worksheet with the data
 ws.update('A1', data)
+row_counter = len(records)+1
+print(row_counter)
 
-class ChatGPTBot(PoeBot):  
+class ChatGPTBot(PoeBot):
+    def __init__(self):
+        self.row_counter = row_counter  # Initialize row_counter
+
     async def get_response(self, query: QueryRequest) -> AsyncIterable[PartialResponse]:
-        global counter
         content = query.query[0].content
         command_check=query.query[-1].content
 
@@ -42,17 +46,18 @@ class ChatGPTBot(PoeBot):
                 reference, destination, date, state = match.groups()[1:]
                 # Add the command to the sheet
                 ws.append_row([reference, destination, date, state])
-                counter += 1
+                self.row_counter += 1  # Increment row_counter
                 response = "Command added successfully."
             else:
                 response = "Invalid command format. Please enter the command info in the format: add_command reference:xxxx destination:xxxx date:xxxx state:xxxx"
-                # Add this line to log the reason for invalid command format
+                # Add this line to log the reason for the invalid command format
                 print(f"Invalid command format: {command_check}")
             yield PartialResponse(text=response)
         else:
             query.query[0].content = base_prompt + content
             async for msg in stream_request(query, "ChatGPT", query.access_key):
                 yield msg
+
 
 
     async def get_settings(self, setting: SettingsRequest) -> SettingsResponse:
