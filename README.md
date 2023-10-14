@@ -1,5 +1,4 @@
-# chatbot-api for school project
-
+# chatbot-api
 ## v1
 
 ![v1](grphs/v1.png)
